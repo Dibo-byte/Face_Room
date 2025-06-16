@@ -12,37 +12,43 @@ Este projeto visa automatizar o controle de presença em salas de aula utilizand
 
 📂 Estrutura do Projeto
 
-projeto_final/
-│
-├── 📁 dataset/                     # Fotos dos alunos para treinamento
-│   ├── aluno1/                     # Pasta por aluno (ex: aluno1_1.jpg, aluno1_2.jpg)
-│   └── aluno2/
-│
-├── 📜 coleta_rosto.py              # Captura rostos e armazena em dataset/
-├── 📜 haarcascade_frontalface_default.xml  # Modelo Haar Cascade para detecção facial
-├── 📜 labels.txt                   # Mapeamento ID-Nome dos alunos
-├── 📜 modelo_lbph.yml              # Modelo treinado (LBPH)
-├── 📜 presenca.html                # Relatório HTML de presenças
-├── 📜 presenca.json                # Registro de presenças (JSON)
-├── 📜 presenca_sala.py             # Script principal (detecta rostos e registra presença)
-├── 📜 teste_janela.py              # Teste de exibição de janela de captura
-├── 📜 teste_reconhecimento.py      # Teste de reconhecimento facial
-└── 📜 treina_reconhecimento.py     # Treina o modelo LBPH com as imagens do dataset
+    projeto_final/
+    │
+    ├── 📁 dataset/ # Fotos para treinamento
+    │ ├── 📁 aluno1/ # Pasta por aluno
+    │ │ ├── 📄 aluno1_1.jpg # Fotos do aluno
+    │ │ └── 📄 aluno1_2.jpg
+    │ └── 📁 aluno2/
+    │ ├── 📄 aluno2_1.jpg
+    │ └── 📄 aluno2_2.jpg
+    │
+    ├── 🐍 coleta_rosto.py # Captura rostos
+    ├── 📄 haarcascade_frontalface_default.xml # Modelo Haar
+    ├── 📄 labels.txt # IDs e nomes
+    ├── 📄 modelo_lbph.yml # Modelo treinado
+    ├── 📄 presenca.html # Relatório
+    ├── 📄 presenca.json # Registros
+    ├── 🐍 presenca_sala.py # Script principal
+    ├── 🐍 teste_janela.py # Teste de janela
+    ├── 🐍 teste_reconhecimento.py # Teste de reconhecimento
+    └── 🐍 treina_reconhecimento.py # Treina modelo
 
 
 ⚙️ Funcionalidades
 
-✔ Coleta de Rostos (coleta_rosto.py) → Captura imagens e armazena em dataset/.
-✔ Treinamento do Modelo (treina_reconhecimento.py) → Gera modelo_lbph.yml e labels.txt.
-✔ Reconhecimento em Tempo Real (presenca_sala.py) → Detecta alunos e registra em presenca.json.
-✔ Relatório de Presença (presenca.html) → Exibe dados consolidados.
+    ✔ Coleta de Rostos (coleta_rosto.py) → Captura imagens e armazena em dataset/.
+    ✔ Treinamento do Modelo (treina_reconhecimento.py) → Gera modelo_lbph.yml e labels.txt.
+    ✔ Reconhecimento em Tempo Real (presenca_sala.py) → Detecta alunos e registra em presenca.json.
+    ✔ Relatório de Presença (presenca.html) → Exibe dados consolidados.
 
 
 🔧 Pré-requisitos
 
     Hardware:
 
-        Raspberry Pi + Câmera 5MP OV5647
+    - 🟠 Raspberry Pi** (qualquer modelo com GPIO)  
+    - 📷 Câmera 5MP OV5647** (ou módulo oficial Raspberry Pi Camera)  
+    - ⚡ Fonte de alimentação 5V/2.5A**  
 
     Software:
 
@@ -91,19 +97,19 @@ xdg-open presenca.html  # Linux
 labels.txt
 plaintext
 
-0:Joao
-1:Maria
-
-(Mapeia IDs do modelo para nomes reais.)
-presenca.json
-json
-
-{
-  "2024-06-15": {
-    "Joao": ["10:00", "10:15"],
-    "Maria": ["10:05"]
-  }
-}
+    0:Joao
+    1:Maria
+    
+    (Mapeia IDs do modelo para nomes reais.)
+    presenca.json
+    json
+    
+    {
+      "2024-06-15": {
+        "Joao": ["10:00", "10:15"],
+        "Maria": ["10:05"]
+      }
+    }
 
 🔍 Testes
 
