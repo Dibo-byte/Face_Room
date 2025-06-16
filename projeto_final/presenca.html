@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Presença</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --accent: #00e5ff;
+      --bg: #121212;
+      --bg-light: #1e1e1e;
+      --text: #f0f0f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--bg-light);
+      padding: 1rem 2rem;
+      border-bottom: 2px solid var(--accent);
+      z-index: 10;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: var(--accent);
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      background: #141414;
+      border-bottom: 1px solid #333;
+    }
+
+    .tab-button {
+      padding: 1rem 2rem;
+      background: none;
+      border: none;
+      color: #ccc;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .tab-button:hover,
+    .tab-button.active {
+      background-color: var(--accent);
+      color: var(--bg);
+      font-weight: 600;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 2rem;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fade 0.5s ease-in-out;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .card {
+      background-color: var(--bg-light);
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 229, 255, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 229, 255, 0.2);
+    }
+
+    .card .name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card .status {
+      color: #00ff90;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .info {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🧑‍🏫 Registro de Presença</h1>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-button active" onclick="openTab('alunos')">Alunos</button>
+    <button class="tab-button" onclick="openTab('resumo')">Resumo</button>
+  </div>
+
+  <div id="alunos" class="tab-content active">
+    <div class="section-title">Presentes</div>
+    <div id="lista-alunos" class="grid"></div>
+  </div>
+
+  <div id="resumo" class="tab-content">
+    <div class="section-title">Informações da Aula</div>
+    <div id="info-resumo" class="info"></div>
+  </div>
+
+  <script>
+    function openTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.tab-button');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    async function carregarPresenca() {
+      try {
+        const res = await fetch("presenca.json");
+        const data = await res.json();
+
+        const lista = document.getElementById("lista-alunos");
+        lista.innerHTML = "";
+
+        data.alunos.forEach(nome => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <div class="name">${nome}</div>
+            <div class="status"><i class="fas fa-check-circle"></i> Presente</div>
+          `;
+          lista.appendChild(card);
+        });
+
+        const resumo = document.getElementById("info-resumo");
+        resumo.innerHTML = `
+          <p><strong>Matéria:</strong> ${data.materia}</p>
+          <p><strong>Horário:</strong> ${data.inicio} - ${data.fim}</p>
+          <p><strong>Total de Alunos:</strong> ${data.total_alunos}</p>
+        `;
+      } catch (err) {
+        console.error("Erro ao carregar presenca.json:", err);
+      }
+    }
+
+    window.onload = carregarPresenca;
+  </script>
+</body>
+</html>
