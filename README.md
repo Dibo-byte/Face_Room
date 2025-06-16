@@ -3,7 +3,8 @@
 📌 Visão Geral
 
 Este projeto visa automatizar o controle de presença em salas de aula utilizando reconhecimento facial (OpenCV e Haar Cascade) e notificação via SMS (Twilio). O sistema identifica alunos por meio de uma câmera (Raspberry Pi), registra sua presença em um banco de dados (JSON) e envia notificações para professores ou responsáveis.
-⚙️ Funcionalidades
+
+    ⚙️ Funcionalidades
 
     ✔ Detecção Facial em Tempo Real (OpenCV + Haar Cascade)
     ✔ Registro Automático de Presença (Armazenamento em JSON)
